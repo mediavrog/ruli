@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.5"
+}
+
+group = 'net.mediavrog'
+version = '1.0.1'
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+}
+
+publishing {
+    publications {
+        DefaultPublication(MavenPublication) {
+            from components.java
+            groupId 'net.mediavrog'
+            artifactId 'ruli'
+            version version
+        }
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintrayUser")
+    key = properties.getProperty("bintrayApiKey")
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'ruli'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/mediavrog/ruli.git'
+        labels = ['rule', 'rule-engine', 'java']
+        publications = ['DefaultPublication']
+        version {
+            name = version
+            desc = 'Initial version'
+//            vcsTag = '1.0'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
