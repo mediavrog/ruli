@@ -1,7 +1,4 @@
-package net.mediavrog.irr;
-
-import net.mediavrog.irr.rule.SimpleRule;
-import net.mediavrog.irr.rule.Value;
+package net.mediavrog.ruli;
 
 import org.junit.Test;
 
@@ -13,6 +10,6 @@ import static org.junit.Assert.*;
 public class SimpleRuleUnitTest {
     @Test
     public void string_equals_correct() throws Exception {
-        assertEquals(new SimpleRule<>(Value.as("OK"), SimpleRule.Comparator.EQ, Value.as("OK")).evaluate(), true);
+        assertEquals(new SimpleRule<String>(Value.as("OK"), SimpleRule.Comparator.EQ, Value.as("OK")).evaluate(), true);
     }
 }

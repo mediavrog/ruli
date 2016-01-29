@@ -8,6 +8,10 @@ plugins {
     id "com.jfrog.bintray" version "1.5"
 }
 
+apply plugin: 'java'
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
 group = 'net.mediavrog'
 version = '1.0.1'
 
@@ -20,13 +24,18 @@ allprojects {
     apply plugin: 'java'
 }
 
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+// PUBLISHING
 publishing {
     publications {
         DefaultPublication(MavenPublication) {
             from components.java
             groupId 'net.mediavrog'
             artifactId 'ruli'
-            version version
+            version '1.0.1'
         }
     }
 }
@@ -37,7 +46,6 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 bintray {
     user = properties.getProperty("bintrayUser")
     key = properties.getProperty("bintrayApiKey")
-    configurations = ['archives']
     pkg {
         repo = 'maven'
         name = 'ruli'
@@ -46,9 +54,9 @@ bintray {
         labels = ['rule', 'rule-engine', 'java']
         publications = ['DefaultPublication']
         version {
-            name = version
+            name = '1.0.1'
             desc = 'Initial version'
-//            vcsTag = '1.0'
+            vcsTag = '1.0'
         }
     }
 }
