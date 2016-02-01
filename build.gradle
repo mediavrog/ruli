@@ -13,8 +13,12 @@ apply plugin: 'java'
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
+ext {
+    lib_version = '1.1.0'
+}
+
 group = 'net.mediavrog'
-version = '1.0.1'
+version = lib_version
 
 allprojects {
     repositories {
@@ -36,7 +40,7 @@ publishing {
             from components.java
             groupId 'net.mediavrog'
             artifactId 'ruli'
-            version '1.0.1'
+            version lib_version
         }
     }
 }
@@ -55,7 +59,7 @@ bintray {
         labels = ['rule', 'rule-engine', 'java']
         publications = ['DefaultPublication']
         version {
-            name = '1.0.1'
+            name = lib_version
             desc = 'Initial version'
             vcsTag = '1.0'
         }

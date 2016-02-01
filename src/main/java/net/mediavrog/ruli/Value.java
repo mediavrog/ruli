@@ -1,7 +1,8 @@
 package net.mediavrog.ruli;
 
 /**
- * Created by maikvlcek on 1/27/16.
+ * Boxed value to support dynamic generation e.g. by querying a persistence layer.
+ * Use {@link Value#as Value.as} shorthand to box a simple variable.
  */
 public abstract class Value<T> {
 

@@ -3,10 +3,17 @@ package net.mediavrog.ruli;
 import java.util.List;
 
 /**
- * Created by maikvlcek on 1/26/16.
+ *  A slightly enhanced `RuleSet`, which saves the last result and can notify a listener upon result availability.
  */
 public class RuleEngine extends RuleSet {
     public static final String TAG = RuleEngine.class.getSimpleName();
+
+    public static class Builder extends RuleSet.Builder {
+        @Override
+        public RuleEngine build() {
+            return new RuleEngine(rules);
+        }
+    }
 
     public interface OnRulesEvaluatedListener {
         void onResult(boolean isValid);
@@ -15,10 +22,6 @@ public class RuleEngine extends RuleSet {
     Boolean mRulesEvaluationResult;
 
     OnRulesEvaluatedListener mOnRulesEvaluatedListener;
-
-    public RuleEngine() {
-        this(null);
-    }
 
     public RuleEngine(List<Rule> rules) {
         super(rules, Mode.OR);

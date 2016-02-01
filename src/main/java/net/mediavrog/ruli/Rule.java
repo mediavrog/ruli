@@ -1,7 +1,7 @@
 package net.mediavrog.ruli;
 
 /**
- * Created by maikvlcek on 1/26/16.
+ * Abstract rule with `evaluate` interface to provide arbitrary results.
  */
 public abstract class Rule {
     /**

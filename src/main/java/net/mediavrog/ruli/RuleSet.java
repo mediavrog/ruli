@@ -4,25 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by maikvlcek on 1/27/16.
+ * Evaluate groups of rules with logical AND or OR. Implements the `Rule` interface to allow nesting.
  */
 public class RuleSet extends Rule {
     public static final String TAG = RuleSet.class.getSimpleName();
 
+    public static Mode DEFAULT_MODE = Mode.AND;
+
     public static class Builder {
-        RuleSet set;
+        Mode mode;
+        ArrayList<Rule> rules;
 
         public Builder() {
-            set = new RuleSet();
+            this(DEFAULT_MODE);
         }
 
-        public Builder addRule(Rule r) {
-            set.addRule(r);
+        public Builder(Mode m) {
+            mode = m;
+            rules = new ArrayList<Rule>();
+        }
+
+        /**
+         * Adds a rule to the collection.
+         *
+         * Pass clones of custom, mutable rules for thread-safety.
+         *
+         * @param rule The rule to add.
+         * @return The Builder object.
+         */
+        public Builder addRule(Rule rule) {
+            rules.add(rule);
             return this;
         }
 
         public RuleSet build() {
-            return set;
+            return new RuleSet(rules, mode);
         }
     }
 
@@ -31,36 +47,24 @@ public class RuleSet extends Rule {
         AND
     }
 
-    List<Rule> mRules;
-    Mode mMode;
-
-    public RuleSet() {
-        this(null, Mode.AND);
-    }
+    final private Rule[] mRules;
+    final private Mode mMode;
 
     public RuleSet(List<Rule> rules) {
-        this(rules, Mode.AND);
+        this(rules, DEFAULT_MODE);
     }
 
     public RuleSet(Mode mode) {
-        this(null, mode);
+        this(new Rule[0], mode);
     }
 
     public RuleSet(List<Rule> rules, Mode mode) {
-        setRules(rules);
+        this(rules.toArray(new Rule[rules.size()]), mode);
+    }
+
+    public RuleSet(Rule[] rules, Mode mode) {
+        mRules = rules;
         mMode = mode;
-    }
-
-    public List<Rule> getRules() {
-        return mRules;
-    }
-
-    public void setRules(List<Rule> rules) {
-        mRules = (rules == null ? new ArrayList<Rule>() : rules);
-    }
-
-    public void addRule(Rule rule) {
-        mRules.add(rule);
     }
 
     @Override
@@ -89,18 +93,18 @@ public class RuleSet extends Rule {
      * Evaluates the set of rules using logical AND.
      * Returns immediately if any rule evaluates to false, so evaluation of each rule is not guaranteed.
      *
-     * @return True, if all rules evaluated to true. False otherwise.
+     * @return True, if all rules evaluated to true. False if no rules given or one rule was false.
      */
     boolean evaluateUsingAnd() {
         for (Rule r : mRules) if (!r.evaluate()) return false;
-        return !mRules.isEmpty();
+        return mRules.length > 0; // result is false for empty lists
     }
 
     @Override
     public String toString(boolean evaluateResult) {
         StringBuilder s = new StringBuilder();
 
-        s.append(mRules.size()).append(" Rules (").append(mMode).append(")\n");
+        s.append(mRules.length).append(" Rules (").append(mMode).append(")\n");
         for (Rule r : mRules) {
             s.append("  ").append(r.toString(evaluateResult)).append("\n");
         }

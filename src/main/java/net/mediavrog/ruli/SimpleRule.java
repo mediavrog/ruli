@@ -1,11 +1,22 @@
 package net.mediavrog.ruli;
 
 /**
- * Created by maikvlcek on 1/27/16.
+ * A simple left-right hand comparison. Takes `Value`s as arguments and a `SimpleRule.Comparator`.
  */
 public class SimpleRule<T extends Comparable<T>> extends Rule {
     public static final String TAG = SimpleRule.class.getSimpleName();
 
+    /**
+     * Common comparison types:
+     * <ul>
+     * <li>`EQ` - equal</li>
+     * <li>`NEQ` - not equal</li>
+     * <li>`GT` - greater than</li>
+     * <li>`GT_EQ` - greater than or equal</li>
+     * <li>`LT` - lesser than</li>
+     * <li>`LT_EQ` - lesser than or equal</li>
+     * </ul>
+     */
     public enum Comparator {
         EQ,
         NEQ,
@@ -15,9 +26,9 @@ public class SimpleRule<T extends Comparable<T>> extends Rule {
         LT_EQ
     }
 
-    Value<T> lhs;
-    Value<T> rhs;
-    Comparator comparator;
+    final private Value<T> lhs;
+    final private Value<T> rhs;
+    final private Comparator comparator;
 
     public SimpleRule(T lhs, Comparator c, T rhs) {
         this(Value.as(lhs), c, Value.as(rhs));
