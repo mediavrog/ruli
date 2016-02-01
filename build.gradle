@@ -9,15 +9,18 @@ plugins {
 }
 
 apply plugin: 'java'
-
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 ext {
+    lib_name = 'ruli'
+    lib_group = 'net.mediavrog'
     lib_version = '1.1.0'
+    lib_version_comment = 'Immutable classes, docs and tests.'
+    lib_tag = '1.1.0'
 }
 
-group = 'net.mediavrog'
+group = lib_group
 version = lib_version
 
 allprojects {
@@ -38,8 +41,8 @@ publishing {
     publications {
         DefaultPublication(MavenPublication) {
             from components.java
-            groupId 'net.mediavrog'
-            artifactId 'ruli'
+            groupId lib_group
+            artifactId lib_name
             version lib_version
         }
     }
@@ -53,15 +56,15 @@ bintray {
     key = properties.getProperty("bintrayApiKey")
     pkg {
         repo = 'maven'
-        name = 'ruli'
+        name = lib_name
         licenses = ['MIT']
         vcsUrl = 'https://github.com/mediavrog/ruli.git'
         labels = ['rule', 'rule-engine', 'java']
         publications = ['DefaultPublication']
         version {
             name = lib_version
-            desc = 'Initial version'
-            vcsTag = '1.0'
+            desc = lib_version_comment
+            vcsTag = lib_tag
         }
     }
 }
