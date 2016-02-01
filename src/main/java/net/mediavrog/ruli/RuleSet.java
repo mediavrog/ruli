@@ -35,11 +35,15 @@ public class RuleSet extends Rule {
     Mode mMode;
 
     public RuleSet() {
-        this(null);
+        this(null, Mode.AND);
     }
 
     public RuleSet(List<Rule> rules) {
         this(rules, Mode.AND);
+    }
+
+    public RuleSet(Mode mode) {
+        this(null, mode);
     }
 
     public RuleSet(List<Rule> rules, Mode mode) {
