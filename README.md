@@ -5,7 +5,26 @@
 Ruli is the tiny rule engine behind the Android library
  [Integrated Rating Request](https://github.com/mediavrog/integrated-rating-request) - a polite way to ask for ratings.
 
-## What is Ruli?
+## Get it
+
+Ruli is available on [Maven jCenter](https://bintray.com/bintray/jcenter?filterByPkgName=ruli).
+
+###### MAVEN
+If you are using Maven for compilation you can declare the library as a dependency.
+```
+<dependency>
+  <groupId>net.mediavrog</groupId>
+  <artifactId>ruli</artifactId>
+  <version>1.1.0</version>
+</dependency>
+```
+
+###### GRADLE
+```
+compile 'net.mediavrog:ruli:1.1.0'
+```
+
+## What is ruli?
 
 Ruli is a tiny rule engine for the evaluation of simple rules. If consists of a couple of classes to describe
  and evaluate rules and sets of rules:
