@@ -48,9 +48,9 @@ public class SimpleRule<T extends Comparable<T>> extends Rule {
             case NEQ:
                 return l.compareTo(r) != 0;
             case LT:
-                return l.compareTo(r) == -1;
+                return l.compareTo(r) < 0;
             case GT:
-                return l.compareTo(r) == 1;
+                return l.compareTo(r) > 0;
             case LT_EQ:
                 return l.compareTo(r) <= 0;
             case GT_EQ:
