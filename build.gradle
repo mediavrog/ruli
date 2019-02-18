@@ -36,6 +36,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
 // PUBLISHING
 publishing {
     publications {
@@ -44,6 +48,10 @@ publishing {
             groupId lib_group
             artifactId lib_name
             version lib_version
+
+            artifact sourceJar {
+                classifier "sources"
+            }
         }
     }
 }
